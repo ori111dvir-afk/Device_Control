@@ -1,3 +1,10 @@
+"""Run the device control application.
+
+This module is the entry point for the device control pipeline. It reads
+configuration from a local INI file, creates the sensor, filter,
+controller, and actuator objects, and then processes sensor values in a loop.
+"""
+
 import time
 import configparser
 
@@ -8,6 +15,23 @@ from controller import Controller
 
 
 def main() -> None:
+    """Run the main device control loop.
+
+    The function reads settings from "config.ini", initializes all components,
+    and then repeatedly polls the sensor at the configured interval
+    (`main.poll_interval_ms`). Each raw sensor reading is filtered before being
+    evaluated by the controller. When the controller threshold is exceeded, the
+    actuator is activated.
+
+    The loop terminates cleanly when the sensor reports failure or reaches end
+    of file, and the sensor resource is always closed.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     config = configparser.ConfigParser()
     config.read("config.ini")
     sensor = Sensor(config.get("sensor", "filename"))
