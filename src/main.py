@@ -50,12 +50,12 @@ def main(config_path: str = "config.in") -> None:
         while True:
             time.sleep(poll_interval_ms / 1000)  # 100 ms
 
-            raw = sensor.read_value()
-            if raw is None:
+            raw_res = sensor.read_value()
+            if raw_res is None or raw_res.status != "ok":
                 print("Error: sensor failure or end of data. Exiting.")
                 break
 
-            filtered = myfilter.apply(raw)
+            filtered = myfilter.apply(raw_res.value)
             print(f"Filtered value: {filtered:.2f}")
             if controller.check(filtered):
                 actuator.activate(filtered)
