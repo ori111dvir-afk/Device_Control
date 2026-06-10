@@ -14,6 +14,7 @@ class SmokeTest(unittest.TestCase):
 
         for name in config_names:
             config_path = fixtures_dir / f"{name}.ini"
+            print(f"Running main.py with config: {config_path}")
             result = subprocess.run(
                 [sys.executable, str(src_dir / "main.py"), str(config_path)],
                 cwd=str(src_dir),
