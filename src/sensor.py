@@ -32,7 +32,7 @@ class Sensor:
         try:
             self.file = open(self.filename, "r")
         except OSError:
-            print("Error: Cannot open sensor file.")
+            print("Sensor file not found, please check the file path, exiting.")
             self.file = None
 
     def read_value(self) -> SensorResult:
