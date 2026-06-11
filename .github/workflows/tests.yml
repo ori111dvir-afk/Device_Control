@@ -1,7 +1,8 @@
-name: Run tests
+name: CI + Test Reviewer Agent
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches: [ main ]
 
@@ -25,3 +26,32 @@ jobs:
 
       - name: Run pytest
         run: pytest -q -s
+
+  review-tests:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install openai python-dotenv
+
+      - name: Run Test Reviewer Agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python tools/test_reviewer_agent.py > review_output.txt
+
+      - name: Comment on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: review_output.txt
