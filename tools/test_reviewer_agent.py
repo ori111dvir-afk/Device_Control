@@ -1,3 +1,4 @@
+# pragma: no cover
 import os
 
 def collect_project_files():
