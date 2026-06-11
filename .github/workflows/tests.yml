@@ -1,8 +1,7 @@
-name: CI + Test Reviewer Agent
+name: Run tests
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
   push:
     branches: [ main ]
 
@@ -50,9 +49,3 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           python tools/test_reviewer_agent.py > review_output.txt
-
-      - name: Comment on PR
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          recreate: true
-          path: review_output.txt
