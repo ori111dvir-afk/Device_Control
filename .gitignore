@@ -2,4 +2,4 @@ __pycache__/
 My/
 *.pyc
 .venv/
-tols/.env
+tools/.env
