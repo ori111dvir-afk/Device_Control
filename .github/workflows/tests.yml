@@ -49,3 +49,9 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           python tools/reviewer_agent.py > review_output.txt
+      - name: Upload review output
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-output
+          path: review_output.txt
+
