@@ -56,7 +56,7 @@ class Sensor:
             return SensorResult(None, "invalid-value")  # not a valid float → sensor failure
 
         # Enforce 0.0–100.0 inclusive
-        if value < 5.0 or value > 111.0:
+        if value < 0.0 or value > 100.0:
             return SensorResult(None, "out-of-range")
 
         return SensorResult(value, "ok")

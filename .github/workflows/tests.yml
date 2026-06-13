@@ -48,4 +48,4 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          python tools/test_reviewer_agent.py > review_output.txt
+          python tools/reviewer_agent.py > review_output.txt
